@@ -28,10 +28,10 @@ pipeline {
                     reuseNode true
                 }
             }
+            
             steps {
-                echo 'Test stage'
                 sh '''
-                    echo "Running tests ..."
+                    test -f build/index.html
                     npm test
                 '''
             }
