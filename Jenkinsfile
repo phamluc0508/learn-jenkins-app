@@ -63,11 +63,13 @@ pipeline {
                             npx playwright test --reporter=line
                         '''
                     }
+                    /*
                     post {
                         always {
-                            // junit 'test-results/junit.xml'
+                            junit 'test-results/junit.xml'
                         }
                     }
+                    */
                 }
             }
         }
