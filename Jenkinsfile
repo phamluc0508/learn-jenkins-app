@@ -47,7 +47,7 @@ pipeline {
 
                 stage('E2E') {
                     stages{
-                        echo 'E2E...'
+                        sh 'echo "E2E ..."'
                     }
                     // agent {
                     //     docker {
