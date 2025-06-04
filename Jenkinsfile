@@ -23,7 +23,7 @@ pipeline {
 
         stage('Tests') {
             parallel {
-                stage('Test ') {
+                stage('Test') {
                     agent {
                         docker {
                             image 'node:18-alpine'
@@ -46,7 +46,7 @@ pipeline {
                 }
 
                 stage('E2E') {
-                    stages{
+                    steps{
                         sh 'echo "E2E ..."'
                     }
                     // agent {
