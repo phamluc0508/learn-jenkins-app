@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-        /*
         stage('Build') {
             agent {
                 docker {
@@ -21,9 +20,8 @@ pipeline {
                 '''
             }
         }
-        */
 
-        stage("Tests") {
+        stage('Tests') {
             parallel {
                 stage('Test ') {
                     agent {
@@ -32,7 +30,7 @@ pipeline {
                             reuseNode true
                         }
                     }
-                    
+
                     steps {
                         sh '''
                             # test -f build/index.html
@@ -54,7 +52,7 @@ pipeline {
                             reuseNode true
                         }
                     }
-                    
+
                     steps {
                         sh '''
                             npm install serve
@@ -63,21 +61,36 @@ pipeline {
                             npx playwright test --reporter=line
                         '''
                     }
-                    /*
+
                     post {
                         always {
-                            junit 'test-results/junit.xml'
+                            publishHTML([
+                                reportDir: 'path/to/html-report',
+                                reportFiles: 'index.html',
+                                reportName: 'Test Report',
+                                allowMissing: false,
+                                alwaysLinkToLastBuild: false,
+                                keepAll: false
+                            ])
                         }
                     }
-                    */
                 }
             }
         }
-    }
 
-    post {
-        always {
-            junit 'test-results/junit.xml'
+        stage('deploy') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    npm install -g netlify-cli
+                    netlify --version
+                '''
+            }
         }
     }
 }
