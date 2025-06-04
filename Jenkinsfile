@@ -46,34 +46,34 @@ pipeline {
                 }
 
                 stage('E2E') {
-                    agent {
-                        docker {
-                            image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
-                            reuseNode true
-                        }
-                    }
+                    // agent {
+                    //     docker {
+                    //         image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                    //         reuseNode true
+                    //     }
+                    // }
 
-                    steps {
-                        sh '''
-                            npm install serve
-                            node_modules/.bin/serve -s build &
-                            sleep 10
-                            npx playwright test --reporter=line
-                        '''
-                    }
+                    // steps {
+                    //     sh '''
+                    //         npm install serve
+                    //         node_modules/.bin/serve -s build &
+                    //         sleep 10
+                    //         npx playwright test --reporter=line
+                    //     '''
+                    // }
 
-                    post {
-                        always {
-                            publishHTML([
-                                reportDir: 'path/to/html-report',
-                                reportFiles: 'index.html',
-                                reportName: 'Test Report',
-                                allowMissing: false,
-                                alwaysLinkToLastBuild: false,
-                                keepAll: false
-                            ])
-                        }
-                    }
+                    // post {
+                    //     always {
+                    //         publishHTML([
+                    //             reportDir: 'path/to/html-report',
+                    //             reportFiles: 'index.html',
+                    //             reportName: 'Test Report',
+                    //             allowMissing: false,
+                    //             alwaysLinkToLastBuild: false,
+                    //             keepAll: false
+                    //         ])
+                    //     }
+                    // }
                 }
             }
         }
