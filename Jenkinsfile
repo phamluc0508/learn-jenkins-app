@@ -7,7 +7,6 @@ pipeline {
     }
 
     stages {
-
         stage('Build') {
             agent {
                 docker {
@@ -93,6 +92,10 @@ pipeline {
                     node_modules/.bin/netlify deploy --dir=build
                 '''
             }
+        }
+
+        stage('Approval'){
+            input message: 'Do you wish to deploy to production?', ok: 'Yes, i am sure!'
         }
 
         stage('Deploy prod') {
