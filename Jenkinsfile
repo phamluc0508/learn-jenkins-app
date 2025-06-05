@@ -127,9 +127,10 @@ pipeline {
                     echo "Deploying to production. Site ID: $NETLIFY_SITE_ID"
                     node_modules/.bin/netlify status
                     node_modules/.bin/netlify deploy --dir=build --prod
-                    echo "Sleeping to wait for production to be updated..."
-                    sleep 10
-                    npx playwright test  --reporter=html
+                    echo "🧪 Running E2E tests against: $CI_ENVIRONMENT_URL"
+                    echo "🔎 Expecting version: $EXPECTED_APP_VERSION"
+                    CI_ENVIRONMENT_URL=$CI_ENVIRONMENT_URL EXPECTED_APP_VERSION=$EXPECTED_APP_VERSION 
+                    npx playwright test --reporter=html
                 '''
             }
 
